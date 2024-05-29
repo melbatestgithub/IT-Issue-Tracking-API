@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const AdminSignUp = async (req, res) => {
-  const { email, firstName, lastName, password } = req.body;
+  const { email, firstName, lastName, password,address,profileImg,phone ,username} = req.body;
   try {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -12,6 +12,10 @@ const AdminSignUp = async (req, res) => {
       firstName,
       lastName,
       password: hashedPassword,
+      address,
+      profileImg,
+      phone,
+      username
     });
     await admin.save();
     res.status(200).json({
