@@ -45,7 +45,7 @@ const Login = async (req, res) => {
       },
       process.env.JWT_SECRET
     );
-    const { password, ...others } = req.body;
+    const { password, ...others } = user._doc;
     res.status(200).json({
       success: true,
       token,
@@ -55,3 +55,8 @@ const Login = async (req, res) => {
 };
 
 module.exports = { AdminSignUp, Login };
+
+
+
+
+
