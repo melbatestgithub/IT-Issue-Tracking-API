@@ -141,6 +141,17 @@ const getITStaffUsers = async (req, res) => {
   }
 };
 
+const UpdateUser=async(req,res)=>{
+  const{id}=req.params;
+  const updatedData=req.body;
+  try {
+    const newUser=await User.findByIdAndUpdate(id,updatedData,{new:true})
+    res.status(200).send({success:true,user:newUser})
+    
+  } catch (error) {
+    res.status(500).send("Internal Server Error is Occured")
+  }
+}
 
 
 module.exports = {
@@ -149,5 +160,6 @@ module.exports = {
   getUsers,
   getITStaffUsers,
   getITstaffEmail,
+  UpdateUser
   
 };
