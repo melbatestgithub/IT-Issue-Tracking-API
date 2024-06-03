@@ -1,5 +1,4 @@
-import mongoose, { Types, model } from 'mongoose'
-
+const mongoose=require("mongoose")
 const messageSchema= new mongoose.Schema(
     {
         conversationId:{
