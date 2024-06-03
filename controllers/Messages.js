@@ -10,4 +10,15 @@ const createMessage=async(req,res)=>{
         res.status(500).send("Internal Server Error is Occured")
     }
 }
-module.exports=createMessage
+
+const getMessage=async(req,res)=>{
+    try {
+        const message=await Message.find({
+            conversationId: req.params.conversationId
+        })
+        res.status(200).send(message)
+    } catch (error) {
+        res.status(500).send("Internal Server Error is Occured")
+    }
+}
+module.exports={createMessage,getMessage}

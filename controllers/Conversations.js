@@ -14,14 +14,15 @@ const createConversation=async(req,res)=>{
     }
 }
 
-const getConversationByWriter=async(req,res)=>{
+const getConversationByWriter = async (req, res) => {
     try {
-        const conversations=await Conversation.find({
-            messages:{$in:[req.body.userId]}
-        })
-        res.status(200).send(conversations)
+        const userId = req.params.userId; // Get userId from route parameters
+        const conversations = await Conversation.find({
+            members: { $in: [userId] }
+        });
+        res.status(200).json(conversations);
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).send("No conversation by this user");
     }
-}
+};
 module.exports={createConversation,getConversationByWriter}
