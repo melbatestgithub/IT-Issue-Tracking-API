@@ -174,15 +174,15 @@ const updateAssignedIssueStatus=async(req,res)=>{
 
 const updateIssue = async (req, res) => {
   const { id } = req.params;
-  const { title, description, category, department, roomNumber } = req.body;
+  const updateIssue = req.body;
   try {
-    const updated = { title, description, category, department, roomNumber };
-    const updatedIssue = await Issue.findByIdAndUpdate(id, updated, {
+ 
+    const theUpdatedIssue = await Issue.findByIdAndUpdate(id, updateIssue, {
       new: true,
     });
     res.status(200).json({
       success: true,
-      updatedIssue,
+      issue:theUpdatedIssue,
     });
   } catch (error) {
     res.status(500).json({
