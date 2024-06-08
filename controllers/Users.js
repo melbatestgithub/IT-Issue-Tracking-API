@@ -102,6 +102,25 @@ const getUsers = async (req, res) => {
     });
   }
 };
+
+const getAllUsers = async (req, res) => {
+  const userId=req.query.userId
+  const firstName=req.query.firstName
+  try {
+    const user =userId?
+     await User.findById(userId):
+     await User.findOne(firstName);
+     const {password,updatedAt,...others}=user._doc
+    res.status(201).json(others);
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+
 const getITstaffEmail = async (req, res) => {
   try {
     const ITStaff = await User.find({ department: { $in: ["IT Staff"] } });
@@ -160,6 +179,7 @@ module.exports = {
   getUsers,
   getITStaffUsers,
   getITstaffEmail,
-  UpdateUser
+  UpdateUser,
+  getAllUsers
   
 };

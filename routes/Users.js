@@ -9,7 +9,8 @@ const {
   getUsers,
   getITStaffUsers,
   getITstaffEmail,
-  UpdateUser
+  UpdateUser,
+  getAllUsers
 
 } = require("../controllers/Users");
 
@@ -29,6 +30,7 @@ router.get("/getAll", getUsers);
 router.get("/getITStaffUser", getITStaffUsers);
 router.get("/getITstaffEmail", getITstaffEmail);
 router.put("/updateUser/:id", UpdateUser);
+router.get("/allUsers", getAllUsers);
 
 
 
