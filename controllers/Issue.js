@@ -28,7 +28,8 @@ const createNewIssue = async (req, res) => {
     await newIssue.save();
 
     // Respond with success message
-    res.status(201).json({ message: "Issue submitted successfully" });
+    res.status(201).json({ message: "Issue submitted successfully", issueId: newIssue._id });
+    console.log(newIssue._id)
   } catch (error) {
     // Handle any errors
     console.error("Error submitting issue:", error);
