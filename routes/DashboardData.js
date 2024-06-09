@@ -22,6 +22,22 @@ router.get('/dashboard-data', async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
+
+
+   
   });
+
+  
+
+
+
+
+
+
+
+
+  // Assume you have a route for fetching dashboard data
+
+
 
   module.exports=router

@@ -15,6 +15,7 @@ const messageRouter=require("./routes/Messages")
 const path=require('path')
 const bodyParser=require('body-parser')
 const dashboardData=require("./routes/DashboardData")
+const Report=require("./routes/Report")
 const cors = require("cors");
 const app = express();
 
@@ -51,6 +52,7 @@ app.use("/api/admin", adminRouter);
 app.use("/api/conversations",conversationRouter)
 app.use("/api/messages",messageRouter)
 app.use("/api/dashboard",dashboardData)
+app.use("/api/report",Report)
 
 app.get("", (req, res) => {
   res.send("Helooo");
