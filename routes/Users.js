@@ -77,5 +77,14 @@ router.put('/updateUser/:id', async (req, res) => {
   }
 });
 
+router.get('/latest-employees', async (req, res) => {
+  try {
+    const employees = await User.find().sort({ createdAt: -1 }).limit(4);
+    res.json(employees);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 module.exports = router;
