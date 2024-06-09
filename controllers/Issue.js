@@ -115,24 +115,25 @@ const deleteIssue = async (req, res) => {
   }
 };
 
-const assignIssue=async(req,res)=>{
+const assignIssue = async (req, res) => {
   try {
-    const { issueId, assignedTo } = req.body;
+    const { issueId, assignedTo, priority } = req.body;
     const issue = await Issue.findById(issueId);
     issue.assignedTo = assignedTo;
+    issue.priority = priority; // Add this line to save the priority
 
-    await issue.save()
+    await issue.save();
     res.status(200).send({
-      message:"Issue has been assigned successfully",
-      issue
-    })
+      message: "Issue has been assigned successfully",
+      issue,
+    });
   } catch (error) {
     res.status(500).send({
-      message:"Unable to assign Issue"
-    })
+      message: "Unable to assign Issue",
+    });
   }
+};
 
-}
 
 
 const fetchAssignedIssue =async(req,res) => {

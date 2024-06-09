@@ -9,7 +9,8 @@ const IssueSchema=new mongoose.Schema({
     date:{type:Date},
     department:{type:String},
     roomNumber:{type:Number},
-    assignedTo:{type:String}
+    assignedTo:{type:String},
+    priority:{type:String}
     
 })
 const Issue= mongoose.model("Issue",IssueSchema)
