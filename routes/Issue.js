@@ -124,4 +124,41 @@ router.get("/latest", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+router.get('/count', async (req, res) => {
+  const { email } = req.query;
+
+
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required' });
+  }
+
+  try {
+    const assignedCount = await Issue.countDocuments({ assignedTo: email  });
+    const solvedCount = await Issue.countDocuments({ assignedTo: email,status:"Solved"  });
+    const RejectedCount = await Issue.countDocuments({ assignedTo: email,status:"Rejected"  });
+
+
+    res.json({ assignedCount,solvedCount,RejectedCount });
+  } catch (error) {
+    console.error('Error fetching counts:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+router.get('/high-priority-issues', async (req, res) => {
+  try {
+    // Find all issues with priority set to "High"
+    const highPriorityIssues = await Issue.find({ priority: 'High' });
+
+    res.json(highPriorityIssues);
+  } catch (error) {
+    console.error('Error fetching high priority issues:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
 module.exports = router;

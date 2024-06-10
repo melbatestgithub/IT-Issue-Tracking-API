@@ -86,5 +86,15 @@ router.get('/latest-employees', async (req, res) => {
   }
 });
 
+router.get('/', async (req, res) => {
+  try {
+    const userId = req.query.exclude;
+    const users = await User.find({ _id: { $ne: userId } });
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 module.exports = router;

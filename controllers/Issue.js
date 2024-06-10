@@ -116,21 +116,29 @@ const deleteIssue = async (req, res) => {
 };
 
 const assignIssue = async (req, res) => {
-  try {
-    const { issueId, assignedTo, priority } = req.body;
-    const issue = await Issue.findById(issueId);
-    issue.assignedTo = assignedTo;
-    issue.priority = priority; // Add this line to save the priority
+  const { issueId, assignedTo, priority } = req.body;
 
+  try {
+    // Find the issue by ID
+    const issue = await Issue.findById(issueId);
+
+    // Check if the issue exists
+    if (!issue) {
+      return res.status(404).json({ error: 'Issue not found' });
+    }
+
+    // Update the assignedTo and priority fields
+    issue.assignedTo = assignedTo;
+    issue.priority = priority;
+
+    // Save the updated issue
     await issue.save();
-    res.status(200).send({
-      message: "Issue has been assigned successfully",
-      issue,
-    });
+
+    // Respond with success message
+    res.json({ message: 'Issue assigned successfully' });
   } catch (error) {
-    res.status(500).send({
-      message: "Unable to assign Issue",
-    });
+    console.error('Error assigning issue:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
