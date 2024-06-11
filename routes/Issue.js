@@ -174,6 +174,16 @@ router.get('/counts/:userId', async (req, res) => {
   }
 });
 
+router.get('/latest/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const latestIssue = await Issue.findOne({ userId }).sort({ createdAt: -1 }).exec();
+    res.json(latestIssue);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 
 module.exports = router;
