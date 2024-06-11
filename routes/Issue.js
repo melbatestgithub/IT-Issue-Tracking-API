@@ -161,4 +161,19 @@ router.get('/high-priority-issues', async (req, res) => {
 
 
 
+router.get('/counts/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const submittedCount = await Issue.countDocuments({ userId });
+    const inProgressCount = await Issue.countDocuments({ userId, status: 'In-progress' });
+    const solvedCount = await Issue.countDocuments({ userId, status: 'Solved' });
+
+    res.json({ submittedCount, inProgressCount, solvedCount });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
+
 module.exports = router;
