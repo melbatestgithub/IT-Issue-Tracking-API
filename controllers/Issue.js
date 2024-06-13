@@ -213,32 +213,6 @@ const getSolvedIssue=async(req,res)=>{
   }
 }
 
-async function addCreatedAtToExistingIssues() {
-  try {
-    // Find all documents in the collection
-  
-    const issues = await Issue.find().maxTimeMS(30000); // Set timeout to 30 seconds
-
-    // Iterate over each document and update the `createdAt` property
-    for (const issue of issues) {
-      // Set the `createdAt` property to the current timestamp
-      issue.createdAt = new Date();
-      // Save the updated document
-      await issue.save();
-    }
-
-    console.log('All documents updated successfully.');
-  } catch (error) {
-    console.error('Error updating documents:', error);
-  }
-}
-
-// Call the function to update existing documents
-addCreatedAtToExistingIssues();
-
-
-
-
 module.exports = {
   createNewIssue,
   getAllIssue,
