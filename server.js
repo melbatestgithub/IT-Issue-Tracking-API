@@ -54,7 +54,8 @@ app.use("/api/conversations",conversationRouter)
 app.use("/api/messages",messageRouter)
 app.use("/api/dashboard",dashboardData)
 app.use("/api/report",Report)
-app.use("/api/faq",FAQ)
+app.use("/api/FAQ",FAQ)
+
 app.get("", (req, res) => {
   res.send("Helooo");
 });

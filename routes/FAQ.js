@@ -1,7 +1,7 @@
 const express=require("express")
 const router=express.Router()
-
-router.post("createFaq",)
+const addFAQ=require("../controllers/FAQ")
+router.post("createFaq",addFAQ)
 router.get("/getFaq",)
 
 
