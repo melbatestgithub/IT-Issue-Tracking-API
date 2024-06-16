@@ -1,18 +1,32 @@
 const Conversation=require("../models/Conversation")
-const createConversation=async(req,res)=>{
 
+const createConversation = async (req, res) => {
     try {
-        
-        const newConversation=new Conversation({
-            members:[req.body.senderID,req.body.recieverID]
-    
-        })
-      const conversation = await newConversation.save()
-      res.status(200).send(conversation)
+        const { senderID, recieverID } = req.body;
+
+        // Check if a conversation already exists between these users
+        const existingConversation = await Conversation.findOne({
+            members: { $all: [senderID, recieverID] }
+        });
+
+        if (existingConversation) {
+            return res.status(200).json({
+                message: "Conversation already exists between these users.",
+                conversation: existingConversation
+            });
+        }
+
+        // Create a new conversation if it doesn't exist
+        const newConversation = new Conversation({
+            members: [senderID, recieverID]
+        });
+
+        const conversation = await newConversation.save();
+        res.status(200).json(conversation);
     } catch (error) {
-        res.status(500).send("Internal Server Error is occured!")
+        res.status(500).send("Internal Server Error occurred!");
     }
-}
+};
 
 const getConversationByWriter = async (req, res) => {
     try {
