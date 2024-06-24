@@ -42,7 +42,7 @@ app.use(bodyParser.json()); // Ensure bodyParser is used before routes
 const allowedOrigins = [
   'http://localhost:3000', 
   'http://localhost:3001',
-  'https://minstry-of-education-issue-portal-3phtz3jbu-melakus-projects.vercel.app'
+  'https://minstryofeducationitissueportal-myxu4bacr-melakus-projects.vercel.app'
 ];
 
 app.use(cors({
