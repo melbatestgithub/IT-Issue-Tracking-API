@@ -43,7 +43,7 @@ app.use(bodyParser.json());
 const allowedOrigins = [
   'http://localhost:3000', 
   'http://localhost:3001',
-  'https://minstryofeducationitissueportal-lszj7sb68-melakus-projects.vercel.app/'
+  'https://minstry-of-education-issue-portal-3phtz3jbu-melakus-projects.vercel.app'
 ];
 
 app.use(cors({
