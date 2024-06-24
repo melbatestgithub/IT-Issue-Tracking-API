@@ -21,6 +21,7 @@ const categoryRouter = require("./routes/Category");
 const cors = require("cors");
 const app = express();
 
+
 dotenv.config();
 
 require("./passport");
@@ -37,12 +38,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 DbConnection();
 app.use(express.json());
-app.use(bodyParser.json()); // Ensure bodyParser is used before routes
+app.use(bodyParser.json()); 
 
 const allowedOrigins = [
   'http://localhost:3000', 
   'http://localhost:3001',
-  'https://minstry-of-education-issue-portal-3phtz3jbu-melakus-projects.vercel.app'
+  'https://minstryofeducationitissueportal-lszj7sb68-melakus-projects.vercel.app/'
 ];
 
 app.use(cors({
@@ -75,7 +76,7 @@ app.get("", (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+  console.log("Server is listening on port 5600")
 });
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
