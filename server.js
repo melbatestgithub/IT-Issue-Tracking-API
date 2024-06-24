@@ -39,14 +39,18 @@ DbConnection();
 app.use(express.json());
 app.use(bodyParser.json()); // Ensure bodyParser is used before routes
 
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://minstry-of-education-issue-portal-3phtz3jbu-melakus-projects.vercel.app'];
-app.use(
-  cors({
-    origin: allowedOrigins,
-    methods: "PUT,POST,GET,DELETE",
-    credentials: true,
-  })
-);
+const allowedOrigins = [
+  'http://localhost:3000', 
+  'http://localhost:3001',
+  'https://minstry-of-education-issue-portal-3phtz3jbu-melakus-projects.vercel.app'
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: "PUT,POST,GET,DELETE",
+  credentials: true,
+}));
+
 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
