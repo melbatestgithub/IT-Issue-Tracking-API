@@ -53,6 +53,20 @@ const getAllIssue = async (req, res) => {
     });
   }
 };
+const getApprovedIssue = async (req, res) => {
+  try {
+    const Issues = await Issue.find({status:'approved'});
+    res.status(200).json({
+      success: true,
+      Issues,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
 
 const UpdateIssueStatus = async (req, res) => {
   try {
@@ -103,7 +117,7 @@ const userHistory = async (req, res) => {
 };
 
 const deleteIssue = async (req, res) => {
-  const { id } = req.params;
+  const id = req.params.id;
   try {
     await Issue.findByIdAndDelete(id);
     res.status(200).json("Issue Has been deleted Successfully");
@@ -224,5 +238,6 @@ module.exports = {
   assignIssue,
   fetchAssignedIssue,
   updateAssignedIssueStatus,
-  getSolvedIssue
+  getSolvedIssue,
+  getApprovedIssue
 };

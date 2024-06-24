@@ -124,10 +124,14 @@ const getAllUsers = async (req, res) => {
 const getITstaffEmail = async (req, res) => {
   try {
     const ITStaff = await User.find({ department: { $in: ["IT Staff"] } });
-   const ITStaffEmails = ITStaff.map((user) => user.email);
+    const ITStaffDetails = ITStaff.map((user) => ({
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    }));
     res.status(201).json({
       success: true,
-      ITStaffEmails,
+      ITStaffDetails,
     });
   } catch (error) {
     res.status(500).json({

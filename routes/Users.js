@@ -38,6 +38,18 @@ router.get("/allUsers", getAllUsers);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 router.put('/updateUser/:id', async (req, res) => {
   try {
     const updatedUserData = { ...req.body };
@@ -77,14 +89,28 @@ router.put('/updateUser/:id', async (req, res) => {
   }
 });
 
+
+
+
+router.delete("/delete/:id",async(req,res)=>{
+  const userId=req.params.id
+  try {
+    await User.findByIdAndDelete(userId)
+    res.status(200).send("User is Deleted Successfully")
+  } catch (error) {
+    res.status(200).send("Error while deleting a use")
+  }
+})
+
 router.get('/latest-employees', async (req, res) => {
   try {
-    const employees = await User.find().sort({ createdAt: -1 }).limit(4);
+    const employees = await User.find().sort({ joinedAt: -1 }).limit(4);
     res.json(employees);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 router.get('/', async (req, res) => {
   try {
@@ -96,5 +122,29 @@ router.get('/', async (req, res) => {
   }
 });
 
+
+router.get('/newly-registered', async (req, res) => {
+  try {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1); // Change this to your desired timeframe
+    
+    const newUsers = await User.find({ joinedAt: { $gte: yesterday } });
+    res.json(newUsers);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post("/createITStaffMember",async(req,res)=>{
+  const newStaff=req.body
+try {
+  
+  const ITStaff=await User.create(newStaff)
+  res.status(201).send({message:"IT Staff member is successfully created",ITStaff})
+} catch (error) {
+  res.status(500).send({message:"Internal Server Error is occured"})
+}
+
+})
 
 module.exports = router;

@@ -10,10 +10,12 @@ const {
   assignIssue,
   fetchAssignedIssue,
   updateAssignedIssueStatus,
-  getSolvedIssue
+  getSolvedIssue,
+  getApprovedIssue
 } = require("../controllers/Issue");
 router.post("/newIssue", createNewIssue);
 router.get("/allIssue", getAllIssue);
+router.get("/approved", getApprovedIssue);
 router.get("/singleIssue/:id", getSingleIssue);
 router.get("/historyIssue/:userId", userHistory);
 router.delete("/deleteIssue/:id", deleteIssue);
@@ -116,7 +118,7 @@ router.get('/issues-by-month', async (req, res) => {
 router.get("/latest", async (req, res) => {
   try {
     const latestIssues = await Issue.find()
-      .sort({ date: -1 }) // Sort by date in descending order (latest first)
+      .sort({ createdAt: -1 }) // Sort by createdAt in descending order (latest first)
       .limit(5); // Limit to the latest five issues
     res.json(latestIssues);
   } catch (error) {
@@ -124,6 +126,7 @@ router.get("/latest", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 
 router.get('/count', async (req, res) => {
   const { email } = req.query;

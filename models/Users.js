@@ -16,8 +16,8 @@ const userSchema = new mongoose.Schema({
   emergencyContact: { type: String },
   gender:{type:String},
   employmentType: { type: Array },
-  isAdmin: { type: Boolean, default: false },
   isITStaff: { type: Boolean, default: false },
+  joinedAt: { type: Date, default: Date.now }
 });
 const User = mongoose.model("Users", userSchema);
 module.exports = User;

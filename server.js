@@ -17,6 +17,7 @@ const bodyParser=require('body-parser')
 const dashboardData=require("./routes/DashboardData")
 const Report=require("./routes/Report")
 const FAQ=require("./routes/FAQ")
+const categoryRouter=require("./routes/Category")
 const cors = require("cors");
 const app = express();
 
@@ -55,12 +56,14 @@ app.use("/api/messages",messageRouter)
 app.use("/api/dashboard",dashboardData)
 app.use("/api/report",Report)
 app.use("/api/FAQ",FAQ)
+app.use("/api/auth", authRouter);
+app.use("/api/category", categoryRouter);
+
 
 app.get("", (req, res) => {
   res.send("Helooo");
 });
 
-app.use("/auth", authRouter);
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
