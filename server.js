@@ -6,25 +6,24 @@ const passport = require("passport");
 const DbConnection = require("./db/DbConnection");
 const userRouter = require("./routes/Users");
 const authRouter = require("./routes/auth");
-const issueRouter=require("./routes/Issue")
-const feedbackRouter=require("./routes/Feedback")
-const departmentRouter=require("./routes/Departments")
-const adminRouter=require("./routes/Admin")
-const conversationRouter=require("./routes/Conversations")
-const messageRouter=require("./routes/Messages")
-const path=require('path')
-const bodyParser=require('body-parser')
-const dashboardData=require("./routes/DashboardData")
-const Report=require("./routes/Report")
-const FAQ=require("./routes/FAQ")
-const categoryRouter=require("./routes/Category")
+const issueRouter = require("./routes/Issue");
+const feedbackRouter = require("./routes/Feedback");
+const departmentRouter = require("./routes/Departments");
+const adminRouter = require("./routes/Admin");
+const conversationRouter = require("./routes/Conversations");
+const messageRouter = require("./routes/Messages");
+const path = require('path');
+const bodyParser = require('body-parser');
+const dashboardData = require("./routes/DashboardData");
+const Report = require("./routes/Report");
+const FAQ = require("./routes/FAQ");
+const categoryRouter = require("./routes/Category");
 const cors = require("cors");
 const app = express();
 
 dotenv.config();
 
 require("./passport");
-
 
 app.use(
   session({
@@ -38,7 +37,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 DbConnection();
 app.use(express.json());
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001']
+app.use(bodyParser.json()); // Ensure bodyParser is used before routes
+
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'https://your-production-url.com'];
 app.use(
   cors({
     origin: allowedOrigins,
@@ -46,28 +47,31 @@ app.use(
     credentials: true,
   })
 );
+
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
 app.use("/api/users", userRouter);
-app.use("/api/issue",issueRouter)
+app.use("/api/issue", issueRouter);
 app.use("/api/feedback", feedbackRouter);
 app.use("/api/department", departmentRouter);
 app.use("/api/admin", adminRouter);
-app.use("/api/conversations",conversationRouter)
-app.use("/api/messages",messageRouter)
-app.use("/api/dashboard",dashboardData)
-app.use("/api/report",Report)
-app.use("/api/FAQ",FAQ)
+app.use("/api/conversations", conversationRouter);
+app.use("/api/messages", messageRouter);
+app.use("/api/dashboard", dashboardData);
+app.use("/api/report", Report);
+app.use("/api/FAQ", FAQ);
 app.use("/api/auth", authRouter);
 app.use("/api/category", categoryRouter);
 
-
 app.get("", (req, res) => {
-  res.send("Helooo");
+  res.send("Hello");
 });
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
 
-
-app.use(bodyParser.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
